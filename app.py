@@ -33,9 +33,6 @@ while True:
             show_message("Error", "The folder is missing required files. Please try again.")
         
 
-print(directory)
-
-
 
 # INSERT ANSWER FOR QUESTION 2 HERE
 product_descriptions = {}
@@ -54,12 +51,12 @@ for index, row in prices_df.iterrows():
 
 product_descriptions   
 
+
 # INSERT ANSWER FOR QUESTION 3 HERE
 def get_order_data(invoice_num, filename, directory):
     invoice_num = int(invoice_num)
-    df = pd.read_excel(directory + filename)
 
-    template = openpyxl.load_workbook(filename)
+    template = openpyxl.load_workbook(directory + filename)
     selected_sheet = template['OrderForm']
 
 
@@ -116,17 +113,6 @@ def get_order_data(invoice_num, filename, directory):
 
 
 
-order_data, name, email, date = get_order_data(8515, 'Order1.xlsx', directory)
-
-print(order_data)
-print(name)
-print(email)
-print(date)
-
-df1 = get_pdf('MasterInvoice.pdf')
-df1
-
-
 # INSERT ANSWER FOR QUESTION 4 HERE
 def create_invoice(invoice_num, order_data, directory):
 
@@ -136,18 +122,15 @@ def create_invoice(invoice_num, order_data, directory):
     create_pdf(original_pdf, new_pdf, order_data)
 
 
-create_invoice(8515, order_data, directory)
 
 
 # INSERT ANSWER FOR QUESTION 5 HERE
-
-
 gmail_password_path = select_file('Please select the gmail password file')
 gmail_password = open(gmail_password_path).read()
 
 def send_email(invoice_num, name, email, date, directory):
 
-
+    gmail_user = "sethfranks1019@gmail.com"
     recipients = [email]
 
     subject = 'Your Order from PythonTech Co. - Invoice ' + str(invoice_num)
@@ -185,8 +168,6 @@ Email: sales@pythontechco.com"""
     mail_server.send_message(message)
     mail_server.quit()
 
-
-send_email(8515, 'Thomas Holt', 'sethfranks1019@gmail.com', '11/13/2023', directory)
 
 # INSERT ANSWER FOR QUESTION 6 HERE
 filenames = os.listdir(directory)
